@@ -5,6 +5,6 @@ request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DAT
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/all')
 def hello_world():
     return request.json()
