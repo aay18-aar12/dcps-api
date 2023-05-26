@@ -9,7 +9,6 @@ app = Flask(__name__)
 def hello_world():
     return request.json()
 
-@app.route('/school/{code}')
-def retSchool(code: int):
-    rn: int = code
-    return {'bo': code}
+@app.route('/school')
+def retSchool():
+    return request.json()
