@@ -8,3 +8,7 @@ app = Flask(__name__)
 @app.route('/all')
 def hello_world():
     return request.json()
+
+@app.route('/school/{name}')
+def retSchool(name: str):
+    return [x for x in request if x['SCHOOL_NAME'] == name]
