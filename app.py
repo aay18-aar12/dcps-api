@@ -11,5 +11,5 @@ def hello_world():
 
 @app.route('/school/{code}')
 def retSchool(code: int):
-    request = [x for x in request if x['SCHOOL_CODE'] == code]
+    request = [x for x in request.json() if x['SCHOOL_CODE'] == code]
     return request.json()
