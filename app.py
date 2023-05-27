@@ -10,7 +10,7 @@ def hello_world():
     return request.json()
 
 @app.route('/code/{code}')
-def retCode(code: int):
+async def retCode(code: int):
     final_set = {}
     bo = request.json()
 
