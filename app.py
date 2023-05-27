@@ -13,6 +13,7 @@ def hello_world():
 def retCode(code: int):
     final_set = {}
     bo = request.json()
+    yo = []
 
     def my_filtering_function(pair):
         key, value = pair
