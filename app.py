@@ -9,8 +9,8 @@ app = Flask(__name__)
 def hello_world():
     return request.json()
 
-@app.route('/code/{code}')
-async def retCode(code: int):
+@app.route('/code/<int:code>')
+def retCode(code: int):
     final_set = {}
     bo = request.json()
 
