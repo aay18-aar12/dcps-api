@@ -19,11 +19,8 @@ def retCode(code: int):
         if key == 'features':
             for i in value:
                 if i.get('attributes').get('SCHOOL_CODE') == code:
-                    if (final_set != {}):
-                        o = final_set.get('features'),i
-                        final_set.update({key: o})
-                    else:
-                        final_set.update({key: i})
+                    yo.append(i)
+                    final_set.update({key: yo})
                 
         else:
             return False
