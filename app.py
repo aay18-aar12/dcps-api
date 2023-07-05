@@ -17,23 +17,23 @@ app = Flask(__name__)
 def hello_world():
     final_set = {}
     yo = []
+
+    def my_filtering_function(pair):
+        key, value = pair
+        if key == 'features':
+            for i in value:
+                yo.append(i)
+                final_set.update({key: yo})
+
+
+                
+        else:
+            return False
+        
     for i in range(2):
         ko = str(i*1000)
         request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=1%3D1&outFields=*&outSR=4326&resultOffset='+ko+'&f=json')
         bo = request.json()
-        def my_filtering_function(pair):
-            key, value = pair
-            if key == 'features':
-                for i in value:
-                    yo.append(i)
-                    final_set.update({key: yo})
-
-
-                
-            else:
-                return False
-        
-
-    filtered_data = dict(filter(my_filtering_function, bo.items()))
+        filtered_data = dict(filter(my_filtering_function, bo.items()))
 
     return final_set
