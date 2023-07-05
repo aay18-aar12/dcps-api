@@ -1,6 +1,6 @@
 from flask import Flask
 import requests
-import math
+
 
 request2 = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=1%3D1&outFields=*&outSR=4326&returnCountOnly=true&f=json')
 
@@ -8,7 +8,7 @@ countHolder = request2.json()
 
 count = countHolder.get('count')
 
-globCount = (math.trunc(count/1000))+1
+
 
 
 app = Flask(__name__)
@@ -17,7 +17,7 @@ app = Flask(__name__)
 def hello_world():
     final_set = {}
     yo = []
-    for i in range(globCount):
+    for i in range(190):
         ko = str(i*1000)
         request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=1%3D1&outFields=*&outSR=4326&resultOffset='+ko+'&f=json')
         bo = request.json()
