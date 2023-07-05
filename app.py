@@ -1,18 +1,67 @@
 from flask import Flask
 import requests
+import math
 
-request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=1%3D1&outFields=*&outSR=4326&f=json')
+request2 = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=1%3D1&outFields=*&outSR=4326&returnCountOnly=true&f=json')
+
+countHolder = request2.json()
+
+count = countHolder.get('count')
+
+globCount = (math.trunc(count/1000))+1
+
 
 app = Flask(__name__)
 
 @app.route('/all')
 def hello_world():
-    return request.json()
+    final_set = {}
+    yo = []
+    for i in range(globCount):
+        ko = str(i*1000)
+        request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=1%3D1&outFields=*&outSR=4326&resultOffset='+ko+'&f=json')
+        bo = request.json()
+        def my_filtering_function(pair):
+            key, value = pair
+            if key == 'features':
+                for i in value:
+                    yo.append(i)
+                    final_set.update({key: yo})
 
-@app.route('/code/<string:code>')
+
+                
+            else:
+                return False
+        
+
+    filtered_data = dict(filter(my_filtering_function, bo.items()))
+
+    return final_set
+
+
+@app.route('/code/<int:code>')
 def retCode(code):
-    codeRequest = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=%20(SCHOOL_CODE%20%3D%20' + code + ')%20&outFields=*&outSR=4326&f=json')
-    return (codeRequest.json())
+    final_set = {}
+    bo = request.json()
+    yo = []
+
+    def my_filtering_function(pair):
+        key, value = pair
+        if key == 'features':
+            for i in value:
+                if i.get('attributes').get('SCHOOL_CODE') == code:
+                    yo.append(i)
+                    final_set.update({key: yo})
+
+
+                
+        else:
+            return False
+        
+
+    filtered_data = dict(filter(my_filtering_function, bo.items()))
+
+    return final_set
 
 @app.route('/name/<string:name>')
 def retName(name):
@@ -61,3 +110,5 @@ def retSubject(subject):
     filtered_data = dict(filter(my_filtering_function, bo.items()))
 
     return final_set
+
+
