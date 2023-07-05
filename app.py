@@ -30,7 +30,7 @@ def hello_world():
         else:
             return False
         
-    for i in range(2):
+    for i in range(globCount):
         ko = str(i*1000)
         request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=1%3D1&outFields=*&outSR=4326&resultOffset='+ko+'&f=json')
         bo = request.json()
