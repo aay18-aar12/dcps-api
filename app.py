@@ -2,19 +2,21 @@ from flask import Flask
 import requests
 import math
 
-request2 = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=SCHOOL_YEAR%20%3D%20%272015-16%27&outFields=*&outSR=4326&returnCountOnly=true&f=json')
 
-countHolder = request2.json()
-
-count = countHolder.get('count')
-
-globCount = (math.trunc(count/1000))+1
 
 
 app = Flask(__name__)
 
-@app.route('/all')
-def hello_world():
+@app.route('/all/<int:school_code>')
+def hello_world(school_code):
+
+    request2 = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=%20(SCHOOL_CODE%20%3D%20'+school_code+')%20&outFields=*&outSR=4326&returnCountOnly=true&f=json')
+
+    countHolder = request2.json()
+
+    count = countHolder.get('count')
+
+    globCount = (math.trunc(count/1000))+1
     final_set = {}
     yo = []
 
@@ -30,9 +32,9 @@ def hello_world():
         else:
             return False
         
-    for i in range(30):
+    for i in range(globCount):
         ko = str(i*1000)
-        request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=SCHOOL_YEAR%20%3D%20%272015-16%27&outFields=*&outSR=4326&resultOffset='+ko+'&f=json')
+        request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=%20(SCHOOL_CODE%20%3D%20'+school_code+')%20&outFields=*&outSR=4326&resultOffset='+ko+'&f=json')
         bo = request.json()
         filtered_data = dict(filter(my_filtering_function, bo.items()))
 
