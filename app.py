@@ -60,7 +60,7 @@ def retCode(school_code, subject):
         key, value = pair
         if key == 'features':
             for i in value:
-                if i.get('attributes').get('subject') == subject:
+                if i.get('attributes').get('SUBJECT') == subject:
                     yo.append(i)
                     final_set.update({key: yo})
 
