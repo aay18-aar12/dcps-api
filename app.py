@@ -80,7 +80,7 @@ def retCode(school_code, subject):
 
 
 @app.route('/name/<string:school_code>/<string:school_name>')
-def retCode(school_code, school_name):
+def retName(school_code, school_name):
 
     request2 = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=%20(SCHOOL_CODE%20%3D%20'+school_code+')%20&outFields=*&outSR=4326&returnCountOnly=true&f=json')
 
