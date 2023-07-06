@@ -30,7 +30,7 @@ def hello_world():
         else:
             return False
         
-    for i in range(10):
+    for i in range(30):
         ko = str(i*1000)
         request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=SCHOOL_YEAR%20%3D%20%272015-16%27&outFields=*&outSR=4326&resultOffset='+ko+'&f=json')
         bo = request.json()
