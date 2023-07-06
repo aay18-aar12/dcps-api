@@ -7,7 +7,7 @@ import math
 
 app = Flask(__name__)
 
-@app.route('/all/<int:school_code>')
+@app.route('/all/<string:school_code>')
 def hello_world(school_code):
 
     request2 = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=%20(SCHOOL_CODE%20%3D%20'+school_code+')%20&outFields=*&outSR=4326&returnCountOnly=true&f=json')
