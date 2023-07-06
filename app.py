@@ -76,3 +76,9 @@ def retCode(school_code, subject):
         filtered_data = dict(filter(my_filtering_function, bo.items()))
 
     return final_set
+
+
+
+@app.route('/health')
+def retHealth():
+    return 'Web Service is Working'
