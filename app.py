@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route('/all/<string:page>')
 def hello_world(page):
 
-    page = page-1
+    
 
     request2 = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=1%3D1&outFields=*&outSR=4326&resultOffset='+page+'&f=json')
 
