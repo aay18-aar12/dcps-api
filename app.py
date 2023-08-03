@@ -29,7 +29,7 @@ def retCode(school_code, page):
 def retName(school_name, page):
 
     ko = (page*1000)-1000
-    request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=%20(SCHOOL_NAME%20%3D%20'+school_name+')%20&outFields=*&outSR=4326&resultOffset='+str(ko)+'&f=json')
+    request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=SCHOOL_NAME%20%3D%20%27'+school_name+'%27&outFields=*&outSR=4326&resultOffset='+str(ko)+'&f=json')
     bo = request.json()
     return bo
     
