@@ -37,7 +37,7 @@ def retName(school_name, page):
 @app.route('/subject/<string:subject>/<int:page>')
 def retSubject(subject, page):
     ko = (page*1000)-1000
-    request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=%20(SUBJECT%20%3D%20'+subject+')%20&outFields=*&outSR=4326&resultOffset='+str(ko)+'&f=json')
+    request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=SUBJECT%20%3D%20%27'+subject+'%27&outFields=*&outSR=4326&resultOffset='+str(ko)+&f=json')
     bo = request.json()
     return bo
 
