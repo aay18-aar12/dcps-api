@@ -18,7 +18,7 @@ def hello_world(page):
 def retCode(school_code, page):
 
     
-    ko = page-1
+    ko = int(page)-1
     request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=%20(SCHOOL_CODE%20%3D%20'+school_code+')%20&outFields=*&outSR=4326&resultOffset='+ko+'&f=json')
     bo = request.json()
     return bo
