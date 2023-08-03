@@ -4,7 +4,7 @@ import math
 
 app = Flask(__name__)
 
-@app.route('/all/<string:page>')
+@app.route('/all/<int:page>')
 def hello_world(page):
 
     ko = (int(page)*1000)-1000
