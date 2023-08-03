@@ -2,118 +2,44 @@ from flask import Flask
 import requests
 import math
 
-
-
-
 app = Flask(__name__)
 
-@app.route('/all/<string:school_code>')
-def hello_world(school_code):
+@app.route('/all/<string:page>')
+def hello_world(page):
 
-    request2 = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=%20(SCHOOL_CODE%20%3D%20'+school_code+')%20&outFields=*&outSR=4326&returnCountOnly=true&f=json')
+    page = page-1
 
-    countHolder = request2.json()
+    request2 = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=1%3D1&outFields=*&outSR=4326&resultOffset='+page+'&f=json')
 
-    count = countHolder.get('count')
-
-    globCount = (math.trunc(count/1000))+1
-    final_set = {}
-    yo = []
-
-    def my_filtering_function(pair):
-        key, value = pair
-        if key == 'features':
-            for i in value:
-                yo.append(i)
-                final_set.update({key: yo})
+    return request2.json()
 
 
-                
-        else:
-            return False
-        
-    for i in range(globCount):
-        ko = str(i*1000)
-        request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=%20(SCHOOL_CODE%20%3D%20'+school_code+')%20&outFields=*&outSR=4326&resultOffset='+ko+'&f=json')
-        bo = request.json()
-        filtered_data = dict(filter(my_filtering_function, bo.items()))
+@app.route('/code/<string:school_code>/<string:page>')
+def retCode(school_code, page):
 
-    return final_set
+    
+    ko = page-1
+    request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=%20(SCHOOL_CODE%20%3D%20'+school_code+')%20&outFields=*&outSR=4326&resultOffset='+ko+'&f=json')
+    bo = request.json()
+    return bo
+    
 
 
+@app.route('/name/<string:school_name>/<string:page>')
+def retName(school_name, page):
 
+    ko = page-1
+    request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=%20(SCHOOL_NAME%20%3D%20'+school_name+')%20&outFields=*&outSR=4326&resultOffset='+ko+'&f=json')
+    bo = request.json()
+    return bo
+    
 
-@app.route('/subject/<string:school_code>/<string:subject>')
-def retCode(school_code, subject):
-
-    request2 = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=%20(SCHOOL_CODE%20%3D%20'+school_code+')%20&outFields=*&outSR=4326&returnCountOnly=true&f=json')
-
-    countHolder = request2.json()
-
-    count = countHolder.get('count')
-
-    globCount = (math.trunc(count/1000))+1
-    final_set = {}
-    yo = []
-
-    def my_filtering_function(pair):
-        key, value = pair
-        if key == 'features':
-            for i in value:
-                if i.get('attributes').get('SUBJECT') == subject:
-                    yo.append(i)
-                    final_set.update({key: yo})
-
-
-                
-        else:
-            return False
-        
-    for i in range(globCount):
-        ko = str(i*1000)
-        request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=%20(SCHOOL_CODE%20%3D%20'+school_code+')%20&outFields=*&outSR=4326&resultOffset='+ko+'&f=json')
-        bo = request.json()
-        filtered_data = dict(filter(my_filtering_function, bo.items()))
-
-    return final_set
-
-
-
-@app.route('/name/<string:school_code>/<string:school_name>')
-def retName(school_code, school_name):
-
-    request2 = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=%20(SCHOOL_CODE%20%3D%20'+school_code+')%20&outFields=*&outSR=4326&returnCountOnly=true&f=json')
-
-    countHolder = request2.json()
-
-    count = countHolder.get('count')
-
-    globCount = (math.trunc(count/1000))+1
-    final_set = {}
-    yo = []
-
-    def my_filtering_function(pair):
-        key, value = pair
-        if key == 'features':
-            for i in value:
-                if i.get('attributes').get('SCHOOL_NAME') == school_name:
-                    yo.append(i)
-                    final_set.update({key: yo})
-
-
-                
-        else:
-            return False
-        
-    for i in range(globCount):
-        ko = str(i*1000)
-        request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=%20(SCHOOL_CODE%20%3D%20'+school_code+')%20&outFields=*&outSR=4326&resultOffset='+ko+'&f=json')
-        bo = request.json()
-        filtered_data = dict(filter(my_filtering_function, bo.items()))
-
-    return final_set
-
-
+@app.route('/subject/<string:subject>/<string:page>')
+def retSubject(subject, page):
+    ko = page-1
+    request = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=%20(SUBJECT%20%3D%20'+subject+')%20&outFields=*&outSR=4326&resultOffset='+ko+'&f=json')
+    bo = request.json()
+    return bo
 
 @app.route('/health')
 def retHealth():
