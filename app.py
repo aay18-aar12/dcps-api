@@ -7,9 +7,9 @@ app = Flask(__name__)
 @app.route('/all/<string:page>')
 def hello_world(page):
 
-    
+    ko = (int(page)*1000)-1000
 
-    request2 = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=1%3D1&outFields=*&outSR=4326&resultOffset='+page+'&f=json')
+    request2 = requests.get('https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/23/query?where=1%3D1&outFields=*&outSR=4326&resultOffset='+ko+'&f=json')
 
     return request2.json()
 
